@@ -92,7 +92,7 @@ namespace NegyedikHet_CP56PI
                 values[counter, 1] = f.Vendor;
                 values[counter, 2] = f.Side;
                 values[counter, 3] = f.District;
-                if (f.Elevator == true){
+                if (f.Elevator){
                     values[counter, 4] = "Van";
                 }
                 else{
@@ -102,9 +102,13 @@ namespace NegyedikHet_CP56PI
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
-                values[counter, 8] = "";
+                values[counter, 8] = "=alapterület*(ár*1000000)";
                 counter++;
             }
+
+            xlSheet.get_Range(
+                GetCell(2, 1),
+                GetCell(1 + values.GetLength(0), values.GetLength(1))).Value2 = values;
         }
         private string GetCell(int x, int y)
         {
