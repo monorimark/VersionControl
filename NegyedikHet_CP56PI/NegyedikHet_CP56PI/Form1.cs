@@ -15,6 +15,14 @@ namespace NegyedikHet_CP56PI
         public Form1()
         {
             InitializeComponent();
+            LoadData();
+        }
+        RealEstateEntities context = new RealEstateEntities();
+        List<Flat> flats;
+
+        private void LoadData()
+        {
+            flats = context.Flat.ToList();
         }
     }
 }
