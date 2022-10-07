@@ -18,6 +18,7 @@ namespace NegyedikHet_CP56PI
         {
             InitializeComponent();
             LoadData();
+            CreateExcel();
         }
         RealEstateEntities context = new RealEstateEntities();
         List<Flat> flats;
@@ -132,7 +133,7 @@ namespace NegyedikHet_CP56PI
 
             Excel.Range utolsoOszlopRange = xlSheet.get_Range(GetCell(1, headers.Length), GetCell(lastRowID, headers.Length));
             utolsoOszlopRange.Interior.Color = Color.LightGreen;
-            //utolsó oszlop adatai 2 tizedesre kerekítve
+            utolsoOszlopRange.NumberFormat = "##0.00";
         }
         private string GetCell(int x, int y)
         {
