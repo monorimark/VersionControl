@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Reflection;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace NegyedikHet_CP56PI
 {
