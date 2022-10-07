@@ -103,7 +103,7 @@ namespace NegyedikHet_CP56PI
                 values[counter, 5] = f.NumberOfRooms;
                 values[counter, 6] = f.FloorArea;
                 values[counter, 7] = f.Price;
-                values[counter, 8] = "=GetCell(counter,6)*(GetCell(counter,7)*1000000)";
+                values[counter, 8] = "=1000000*{0}/{1}", GetCell(counter, 7), GetCell(counter, 6);
                 counter++;
             }
 
@@ -127,11 +127,11 @@ namespace NegyedikHet_CP56PI
             Excel.Range tableRange = xlSheet.get_Range(GetCell(1, 1), GetCell(lastRowID, headers.Length));
             tableRange.BorderAround2(Excel.XlLineStyle.xlContinuous, Excel.XlBorderWeight.xlThick);
 
-            Excel.Range elsoOszlopRange = xlSheet.get_Range(GetCell(1, 1), GetCell(1, lastRowID));
+            Excel.Range elsoOszlopRange = xlSheet.get_Range(GetCell(2, 1), GetCell(lastRowID, 1));
             elsoOszlopRange.Font.Bold = true;
             elsoOszlopRange.Interior.Color = Color.LightYellow;
 
-            Excel.Range utolsoOszlopRange = xlSheet.get_Range(GetCell(1, headers.Length), GetCell(lastRowID, headers.Length));
+            Excel.Range utolsoOszlopRange = xlSheet.get_Range(GetCell(2, headers.Length), GetCell(lastRowID, headers.Length));
             utolsoOszlopRange.Interior.Color = Color.LightGreen;
             utolsoOszlopRange.NumberFormat = "##0.00";
         }
