@@ -19,7 +19,24 @@ namespace Otodikhet_CP56PI
         public Form1()
         {
             InitializeComponent();
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            var request = new GetCurrenciesRequestBody();
+            var response = mnbService.GetCurrencies(request);
+            var result = response.GetCurrenciesResult;
+
+            var xml = new XmlDocument();
+            xml.LoadXml(result);
+            foreach (XmlElement element in xml.DocumentElement)
+            {
+                var childElement = (XmlElement)element.ChildNodes[0];
+                var c = (element.GetAttribute("curr")).ToString();
+                if (childElement == null) continue;
+                
+                Currencies.Add(c);
+            }
+
             RefreshData();
+            comboBox1.DataSource = Currencies;
         }
 
         private void RefreshData()
@@ -45,6 +62,7 @@ namespace Otodikhet_CP56PI
             return result;
         }
         BindingList<RateData> Rates = new BindingList<RateData>();
+        BindingList<string> Currencies = new BindingList<string>();
         
         private void XMLFeldolg(string result)
         {
