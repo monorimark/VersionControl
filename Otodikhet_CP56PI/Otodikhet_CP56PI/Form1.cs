@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Otodikhet_CP56PI.MbnServiceReference;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,19 @@ namespace Otodikhet_CP56PI
         public Form1()
         {
             InitializeComponent();
+            WebHivas();
+        }
+        private void WebHivas()
+        {
+            var mnbService = new MNBArfolyamServiceSoapClient();
+            var request = new GetExchangeRatesRequestBody()
+            {
+                currencyNames = "EUR",
+                startDate = "2020-01-01",
+                endDate = "2020-06-30"
+            };
+            var response = mnbService.GetExchangeRates(request);
+            var result = response.GetExchangeRatesResult;
         }
     }
 }
