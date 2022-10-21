@@ -1,4 +1,5 @@
 ﻿using Otodikhet_CP56PI.MbnServiceReference;
+using Otodikhet_CP56PI.Entitites;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace Otodikhet_CP56PI
         {
             InitializeComponent();
             WebHivas();
+            dataGridView1.DataSource = Rates;
         }
         private void WebHivas()
         {
@@ -30,5 +32,6 @@ namespace Otodikhet_CP56PI
             var response = mnbService.GetExchangeRates(request);
             var result = response.GetExchangeRatesResult;
         }
+        BindingList<RateData> Rates = new BindingList<RateData>();
     }
 }
