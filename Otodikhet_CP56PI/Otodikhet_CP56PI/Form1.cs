@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace Otodikhet_CP56PI
 {
@@ -21,6 +22,7 @@ namespace Otodikhet_CP56PI
             //WebHivas();
             dataGridView1.DataSource = Rates;
             XMLFeldolg(WebHivas());
+            adatMegjelenit();
         }
         private string WebHivas()
         {
@@ -57,6 +59,23 @@ namespace Otodikhet_CP56PI
                 var value = decimal.Parse(childElement.InnerText);
                 if (unit != 0) rate.Value = value / unit;
             }
+        }
+        private void adatMegjelenit()
+        {
+            chartRateData.DataSource = Rates;
+
+            var series = chartRateData.Series[0];
+            series.ChartType = SeriesChartType.Line;
+            series.XValueMember = "Date";
+            series.YValueMembers = "Value";
+
+            var legend = chartRateData.Legends[0];
+            legend.Enabled = false;
+
+            var chartArea = chartRateData.ChartAreas[0];
+            chartArea.AxisX.MajorGrid.Enabled = false;
+            chartArea.AxisY.MajorGrid.Enabled = false;
+            chartArea.AxisY.IsStartedFromZero = false;
         }
     }
 }
