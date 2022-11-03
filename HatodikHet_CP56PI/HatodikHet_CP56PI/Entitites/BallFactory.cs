@@ -8,7 +8,7 @@ namespace HatodikHet_CP56PI.Entitites
 {
     public class BallFactory
     {
-        public Ball CreateNew()
+        public Toy CreateNew()
         {
             return new Ball();
         }

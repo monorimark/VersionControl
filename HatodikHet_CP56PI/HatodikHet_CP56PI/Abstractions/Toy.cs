@@ -6,27 +6,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace HatodikHet_CP56PI.Entitites
+namespace HatodikHet_CP56PI.Abstractions
 {
-    public class Toy : Label
+    public abstract class Toy : Label
     {
         public Toy()
         {
             AutoSize = false;
             Width = 50;
             Height = Width;
-            Paint += Ball_Paint;
+            Paint += Toy_Paint;
         }
 
-        private void Ball_Paint(object sender, PaintEventArgs e)
+        private void Toy_Paint(object sender, PaintEventArgs e)
         {
             DrawImage(e.Graphics);
         }
-        protected void DrawImage(Graphics g)
-        {
-            g.FillEllipse(new SolidBrush(Color.Blue), 0, 0, Width, Height);
-        }
-        public void MoveBall()
+
+        protected abstract void DrawImage(Graphics g);
+
+        public virtual void MoveToy()
         {
             Left += 1;
         }
