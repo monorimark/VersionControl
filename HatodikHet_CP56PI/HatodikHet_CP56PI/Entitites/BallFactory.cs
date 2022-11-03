@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HatodikHet_CP56PI.Entitites
 {
-    class BallFactory
+    public class BallFactory
     {
         public Ball CreateNew()
         {

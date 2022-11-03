@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace HatodikHet_CP56PI.Entitites
 {
-    class Ball : Label
+    public class Ball : Label
     {
         public Ball()
         {
