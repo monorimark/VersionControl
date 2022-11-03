@@ -13,7 +13,7 @@ namespace HatodikHet_CP56PI
 {
     public partial class Form1 : Form
     {
-        private List<Toy> _balls = new List<Toy>();
+        private List<Ball> _balls = new List<Ball>();
 
         private BallFactory _factory;
         public BallFactory Factory
