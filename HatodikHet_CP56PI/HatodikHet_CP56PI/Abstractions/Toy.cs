@@ -15,6 +15,7 @@ namespace HatodikHet_CP56PI.Abstractions
             AutoSize = false;
             Width = 50;
             Height = Width;
+            Top = 200;
             Paint += Toy_Paint;
         }
 

@@ -17,6 +17,7 @@ namespace HatodikHet_CP56PI
         private List<Toy> _toys = new List<Toy>();
 
         private Toy _nextToy;
+
         private IToyFactory _factory;
         public IToyFactory Factory
         {
@@ -73,8 +74,8 @@ namespace HatodikHet_CP56PI
         }
         private void DisplayNext()
         {
-            if (_nextToy != null)
-                Controls.Remove(_nextToy);
+            if (_nextToy != null) Controls.Remove(_nextToy);
+
             _nextToy = Factory.CreateNew();
             _nextToy.Top = label1.Top + label1.Height + 20;
             _nextToy.Left = label1.Left;
@@ -90,6 +91,15 @@ namespace HatodikHet_CP56PI
             if (colorPicker.ShowDialog() != DialogResult.OK)
                 return;
             button.BackColor = colorPicker.Color;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            Factory = new PresentFactory()
+            {
+                ribbonColor = button5.BackColor,
+                boxColor = button6.BackColor
+            };
         }
     }
 }
