@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace HetedikHet_CP56PI
 {
@@ -17,6 +18,8 @@ namespace HetedikHet_CP56PI
         List<Tick> Ticks;
 
         List<PortfolioItem> Portfolio = new List<PortfolioItem>();
+
+        List<decimal> Nyereségek = new List<decimal>();
         public Form1()
         {
             InitializeComponent();
@@ -24,7 +27,7 @@ namespace HetedikHet_CP56PI
             dataGridView1.DataSource = Ticks;
             CreatePortfolio();
 
-            List<decimal> Nyereségek = new List<decimal>();
+            
             int intervalum = 30;
             DateTime kezdőDátum = (from x in Ticks select x.TradingDay).Min();
             DateTime záróDátum = new DateTime(2016, 12, 30);
@@ -63,6 +66,26 @@ namespace HetedikHet_CP56PI
                 value += (decimal)last.Price * item.Volume;
             }
             return value;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                StreamWriter sw = new StreamWriter(sfd.FileName, false, Encoding.Default);
+                sw.WriteLine("Időszak" + ";" + "Nyereség");
+
+                int i = 0;
+                foreach (var item in Nyereségek)
+                {
+                    sw.WriteLine(i + ";"+ item);
+                    i++;
+                }
+
+                sw.Close();
+            }
+            
         }
     }
 }
