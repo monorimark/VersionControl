@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,7 @@ namespace UnitTestExample.Test
             //Assert
             Assert.AreEqual(expectedResult, result);
         }
+
         [
             Test,
             TestCase("irf@uni-corvinus.hu", "Abcd1234"),
@@ -65,7 +67,39 @@ namespace UnitTestExample.Test
             //Assert
             Assert.AreEqual(email, result.Email);
             Assert.AreEqual(password, result.Password);
-            Assert.AreEqual(Guid.Empty, result.ID);
+            Assert.AreNotEqual(Guid.Empty, result.ID);
+        }
+
+        [
+            Test,
+            TestCase("irf@uni-corvinus", "Abcd1234"),
+            TestCase("irf.uni-corvinus.hu", "Abcd1234"),
+            TestCase("irf@uni-corvinus.hu", "abcd1234"),
+            TestCase("irf@uni-corvinus.hu", "ABCD1234"),
+            TestCase("irf@uni-corvinus.hu", "abcdABCD"),
+            TestCase("irf@uni-corvinus.hu", "Ab1234"),
+        ]
+        public void TestRegisterValidateException(string email, string password)
+        {
+            //Arrange
+            var accountController = new AccountController();
+
+            //Act
+            try
+            {
+                var result = accountController.Register(email, password);
+                Assert.Fail();
+            }
+            catch (Exception ex)
+            {
+
+                Assert.IsInstanceOf<ValidationException>(ex);
+            }
+
+            //Assert
+            /*Assert.AreEqual(email, result.Email);
+            Assert.AreEqual(password, result.Password);
+            Assert.AreEqual(Guid.Empty, result.ID);*/
         }
     }
 }
