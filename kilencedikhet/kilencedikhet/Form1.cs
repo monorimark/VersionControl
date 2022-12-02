@@ -22,11 +22,31 @@ namespace kilencedikhet
             DeathProbabilities = DPLoad(@"C:\Temp\halál.csv");
 
             //dataGridView1.DataSource = Population;
+
+            //szimuláció
+            for (int year = 2005; year <= 2024; year++) //évek
+            {
+                for (int i = 0; i < Population.Count; i++) //népesség öszes egyede
+                {
+
+                }
+
+                int nbrOfMales = (from x in Population
+                                  where x.Gender == Gender.Male && x.IsALive
+                                  select x).Count();
+                int nbrOfFemales = (from x in Population
+                                  where x.Gender == Gender.Female && x.IsALive
+                                  select x).Count();
+
+                Console.WriteLine(string.Format("Év: {0}, Férfi: {1} Nő: {2}", year, nbrOfMales, nbrOfFemales));
+            }
         }
 
         List<Person> Population = new List<Person>();
         List<BirthProbability> BirthProbabilities = new List<BirthProbability>();
         List<DeathProbability> DeathProbabilities = new List<DeathProbability>();
+
+        Random rng = new Random(1234);
 
         public List<Person> PLoad(string file)
         {
