@@ -28,7 +28,7 @@ namespace kilencedikhet
             {
                 for (int i = 0; i < Population.Count; i++) //népesség öszes egyede
                 {
-
+                    SimStep(year, Population[i]);
                 }
 
                 int nbrOfMales = (from x in Population
@@ -107,6 +107,37 @@ namespace kilencedikhet
 
             f.Close();
             return deathProbabilities;
+        }
+        public void SimStep(int year, Person person)
+        {
+            if (!person.IsALive) return; //él-e még
+
+            byte age = (byte)(year - person.BirthYear); //életkor
+
+            double pD = (from x in DeathProbabilities           //halálozás valószínűsége
+                         where x.Gender == person.Gender && x.Age == age
+                         select x.P).FirstOrDefault();
+
+            if (rng.NextDouble() <= pD)  //elhalálozás
+            {
+                person.IsALive = false;
+            }
+
+            if (person.IsALive && person.Gender == Gender.Female) //ha él és nő
+            {
+                double pB = (from x in BirthProbabilities   //szülés valószínűsége
+                             where x.Age == age
+                             select x.P).FirstOrDefault();
+
+                if (rng.NextDouble() <= pB)
+                {
+                    Person gyermek = new Person();
+                    gyermek.BirthYear = year;
+                    gyermek.NbrOfChildren = 0;
+                    gyermek.Gender = (Gender)(rng.Next(1, 3));
+                    Population.Add(gyermek);
+                }
+            }
         }
     }
 }
