@@ -17,14 +17,14 @@ namespace kilencedikhet
         public Form1()
         {
             InitializeComponent();
-            Population = PLoad(@"C:\Temp\nép.csv");
+            Population = PLoad(txtFile.Text);
             BirthProbabilities = BPLoad(@"C:\Temp\születés.csv");
             DeathProbabilities = DPLoad(@"C:\Temp\halál.csv");
+        }
 
-            //dataGridView1.DataSource = Population;
-
-            //szimuláció
-            for (int year = 2005; year <= 2024; year++) //évek
+        private void Simulation()
+        {
+            for (int year = 2005; year <= numericMaxYear.Value; year++) //évek
             {
                 for (int i = 0; i < Population.Count; i++) //népesség öszes egyede
                 {
@@ -34,11 +34,12 @@ namespace kilencedikhet
                 int nbrOfMales = (from x in Population
                                   where x.Gender == Gender.Male && x.IsALive
                                   select x).Count();
-                int nbrOfFemales = (from x in Population
-                                  where x.Gender == Gender.Female && x.IsALive
-                                  select x).Count();
 
-                Console.WriteLine(string.Format("Év: {0}, Férfi: {1} Nő: {2}", year, nbrOfMales, nbrOfFemales));
+                int nbrOfFemales = (from x in Population
+                                    where x.Gender == Gender.Female && x.IsALive
+                                    select x).Count();
+
+                //Console.WriteLine(string.Format("Év: {0}, Férfi: {1} Nő: {2}", year, nbrOfMales, nbrOfFemales));
             }
         }
 
@@ -137,6 +138,39 @@ namespace kilencedikhet
                     gyermek.Gender = (Gender)(rng.Next(1, 3));
                     Population.Add(gyermek);
                 }
+            }
+        }
+
+        private void btnStart_Click(object sender, EventArgs e)
+        {
+            richTextBox1.Clear();
+            Simulation();
+            DisplayResult();
+        }
+
+        private void btnBrowse_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                txtFile.Text = ofd.FileName;
+            }
+        }
+
+        private void DisplayResult()
+        {
+            for (int year = 2005; year <= numericMaxYear.Value; year++)
+            {
+                int nbrOfMales = (from x in Population
+                                  where x.Gender == Gender.Male && x.IsALive
+                                  select x).Count();
+
+                int nbrOfFemales = (from x in Population
+                                    where x.Gender == Gender.Female && x.IsALive
+                                    select x).Count();
+                richTextBox1.Text +=
+                    string.Format("Szimulációs év: {0}\n \tFérfi: {1}\n \tNő: {2}\n", year, nbrOfMales, nbrOfFemales);
             }
         }
     }
