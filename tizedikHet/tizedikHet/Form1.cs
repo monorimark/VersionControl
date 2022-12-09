@@ -47,6 +47,22 @@ namespace tizedikHet
                              orderby p.GetFitness() descending
                              select p;
             var topPerformers = playerList.Take(populationSize / 2).ToList();
+
+            gc.ResetCurrentLevel();
+            foreach (var p in topPerformers)
+            {
+                var b = p.Brain.Clone();
+                if (generation % 3 == 0)
+                    gc.AddPlayer(b.ExpandBrain(nbrOfStepsIncrement));
+                else
+                    gc.AddPlayer(b);
+
+                if (generation % 3 == 0)
+                    gc.AddPlayer(b.Mutate().ExpandBrain(nbrOfStepsIncrement));
+                else
+                    gc.AddPlayer(b.Mutate());
+            }
+            gc.Start();
         }
     }
 }
