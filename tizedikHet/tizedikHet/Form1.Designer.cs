@@ -1,5 +1,5 @@
 ﻿
-namespace worldsHardestGame
+namespace tizedikHet
 {
     partial class Form1
     {
